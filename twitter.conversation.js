@@ -92,4 +92,4 @@ var twittrConv = {
     }
   },
 }
-(function(){twittrConv.activate()})();
+twittrConv.activate();
