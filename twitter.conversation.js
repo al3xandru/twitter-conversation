@@ -48,7 +48,7 @@ var twittrConv = {
     var id= je.attr('href').split('/').pop();
     var par_li = je.parents('li.status');
     //alert(par_li.attr('id'));
-    var newli = $('<li class="hentry status twittr_conv" style="padding-left:5px;"><ol class="statuses"><li>Conversation:</li></ol></li>')
+    var newli = $('<li class="hentry status twittr_conv" style="padding-left:10px;"><ol class="statuses"><li>Conversation:</li></ol></li>')
     par_li.after(newli);
     var conv_ol = newli.find('ol.statuses');
     twittrConv.fetch_status(id, conv_ol)
