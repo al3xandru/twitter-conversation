@@ -88,8 +88,8 @@ var twittrConv = {
     var navmenu = $('ul#primary_nav');
     if(!navmenu.hasClass('twittr_conv')) {
       navmenu.addClass('twittr_conv');
-      navmenu.append('<li id="twitter_conv"><a href="javascript:twittrConv.attach();" accesskey="">Conversations</a></li>');
+      navmenu.append('<li id="twitter_conv"><a href="javascript:twittrConv.attach();" accesskey="t">Conversations</a></li>');
     }
   },
 }
-
+(function(){twittrConv.activate()})();
