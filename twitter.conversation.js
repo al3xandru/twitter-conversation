@@ -62,6 +62,7 @@ var twittrConv = {
         for(var a in data.user) {
           data['user_' + a] = data.user[a]
         }
+        data['text'] = twittrConv.parse_tweet(data.text);
         conv_ol.append(Mustache.to_html(twittrConv.twit_template, data));
         if(data.in_reply_to_status_id){
           twittrConv.fetch_status(data.in_reply_to_status_id, conv_ol);
@@ -69,6 +70,23 @@ var twittrConv = {
       },
       dataType:'jsonp',
     });
+  },
+
+  
+  parse_tweet:function(text) {
+    text=text.replace(/http(s)?:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+/, function(url) {
+  		return url.link(url);
+    });
+    
+    text = text.replace(/[@]+[A-Za-z0-9-_]+/, function(u) {
+		  var username = u.replace("@","")
+		  return u.link("http://twitter.com/"+username);
+	  });
+    text = text.replace(/[#]+[A-Za-z0-9-_]+/, function(t) {
+  		var tag = t.replace("#","%23")
+	  	return t.link("http://search.twitter.com/search?q="+tag);
+    });
+    return text; 
   },
 
   attach:function() {
