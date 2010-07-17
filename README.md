@@ -21,4 +21,4 @@ Bookmarklet: <a href="javascript:(function(){if(typeof(twittrConv)!='undefined')
 
 Bookmarklet code:
 
-  javascript:(function(){if(typeof(twittrConv)!='undefined'){twittrConv.attach()}else{d=document;s=d.createElement('script');s.type='text/javascript';s.src='http://github.com/al3xandru/twitter-conversation/raw/master/twitter.conversation.js';d.body.appendChild(s)}})();
+    javascript:(function(){if(typeof(twittrConv)!='undefined'){twittrConv.attach()}else{d=document;s=d.createElement('script');s.type='text/javascript';s.src='http://github.com/al3xandru/twitter-conversation/raw/master/twitter.conversation.js';d.body.appendChild(s)}})();
