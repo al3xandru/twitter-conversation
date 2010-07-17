@@ -18,7 +18,7 @@ var twittrConv = {
           '<a title="favorite this tweet" class="fav-action non-fav" id="status_star_{{ id }}">&nbsp;&nbsp;</a>' +
         '</div>' + 
       '</span>' +
-      '<span class="entry-content">&nbsp;{{ text }}</span>' +
+      '<span class="entry-content">&nbsp;{{{ text }}}</span>' +
     '</span>' +
     '<span data="{}" class="meta entry-meta">' +
       '<a href="http://twitter.com/{{ user_screen_name }}/status/{{ id }}" rel="bookmark" class="entry-date">' +
