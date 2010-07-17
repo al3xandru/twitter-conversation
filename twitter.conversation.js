@@ -89,8 +89,8 @@ var twittrConv = {
     if(!navmenu.hasClass('twittr_conv')) {
       navmenu.addClass('twittr_conv');
       navmenu.append('<li id="twitter_conv"><a href="javascript:twittrConv.attach();" accesskey="t" title="Activate conversations">Conversations</a></li>');
-      $('div#pagination').after('<div style="margin-right: auto; margin-left: auto; text-align: center;" class="twittr_conversation"><a href="javacript:twittrConv.attach()" title="Activate conversations">Conversations</a></div>');
-      $('div#side').append('<div class="sidebar-menu"><hr/><a href="javacript:twittrConv.attach()" title="Activate conversations">Conversations</a></div>');
+      $('div#pagination').after('<div style="margin-right: auto; margin-left: auto; text-align: center;" class="twittr_conversation"><a href="javascript:twittrConv.attach()" title="Activate conversations">Conversations</a></div>');
+      $('div#side').append('<div class="twittr_conv"><hr/><a href="javascript:twittrConv.attach()" title="Activate conversations" style="margin-left:13px;">Conversations</a></div>');
     }
   },
 }
