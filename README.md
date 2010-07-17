@@ -17,5 +17,4 @@ The "Conversations" menu item can be triggered using the "t" access key (*note*:
 
 The following bookmarklet can be used to trigger the initial load of this script. The bookmarklet is reload friendly, as in it will not reload itself if already loaded, but will trigger itself to add the conversation action.
 
-Bookmarklet: <a href="javascript:(function(){if(twittrConv){twittrConv.attach()}else{d=document;s=d.createElement('script');s.type='text/javascript';s.src='http://github.com/al3xandru/twitter-conversation/raw/master/twitter.conversation.js';d.body.appendChild(s);}})();">Twitter conversations</a>
-
+Bookmarklet: [Twitter conversations](javascript:(function(){if(twittrConv){twittrConv.attach()}else{d=document;s=d.createElement('script');s.type='text/javascript';s.src='http://github.com/al3xandru/twitter-conversation/raw/master/twitter.conversation.js';d.body.appendChild(s);}})();)
