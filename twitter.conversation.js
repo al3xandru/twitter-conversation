@@ -97,7 +97,7 @@ var twittrConv = {
         var areply = $(e);
         if(!areply.hasClass('twittr_conv')) {
           var conv_span=$('<span class="meta entry-meta"></span>');
-          var conv_link=$('<a href="' + areply.attr('href') + '">Show thread with ' + areply.text().substring(11) + '</a>');
+          var conv_link=$('<a style="color:blue" href="' + areply.attr('href') + '">Show thread with ' + areply.text().substring(11) + '</a>');
           conv_link.click(function(){twittrConv.fetch_conversation(areply);return false});
           conv_span.append(conv_link);
           a_elem.after(conv_span);
