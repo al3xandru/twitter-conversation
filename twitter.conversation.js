@@ -91,13 +91,19 @@ var twittrConv = {
 
   attach:function() {
     //alert('attaching');
-    $('span.status-body span.meta > a').each(function(idx,elem){
+    $('span.status-body span.meta').each(function(idx,elem){
       var a_elem=$(elem);
-      if(!a_elem.hasClass('twittr_conv') && a_elem.text().indexOf('in reply to') > -1) {
-        a_elem.addClass('twittr_conv');
-        a_elem.text('show thread w/' + a_elem.text().substring(11));
-        a_elem.click(function(){twittrConv.fetch_conversation(a_elem);return false});
-      }
+      a_elem.find("a:contains('in reply to')").each(function(idx, e) {
+        var areply = $(e);
+        if(!areply.hasClass('twittr_conv')) {
+          var conv_span=$('<span class="meta entry-meta"></span>');
+          var conv_link=$('<a href="' + areply.attr('href') + '">Show thread with ' + areply.text().substring(11) + '</a>');
+          conv_link.click(function(){twittrConv.fetch_conversation(areply);return false});
+          conv_span.append(conv_link);
+          a_elem.after(conv_span);
+          areply.addClass('twittr_conv');
+        }
+      });
     });
   },
 
