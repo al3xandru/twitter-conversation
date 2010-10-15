@@ -1,78 +1,84 @@
-/*
- * This script is provided AS IS.
- *
- * Author: Alex Popescu
- */
 var twittrConv = {
-  twit_template: '<li id="status_{{ id }}" class="hentry u-{{ user_screen_name }} status">' +
-  '<span class="thumb vcard author">' +
-    '<a class="tweet-url profile-pic url" href="http://twitter.com/{{ user_screen_name }}">' +
-      '<img width="48" height="48" src="{{ user_profile_image_url }}" class="photo fn" alt="{{ user_name }}">' +
-    '</a>' +
-  '</span>  ' +
-  '<span class="status-body">' +
-    '<span class="status-content">' +
-      '<strong><a class="tweet-url screen-name" href="http://twitter.com/{{ user_screen_name }}">{{ user_screen_name }}</a></strong>' + 
-      '<span class="actions">' +
-        '<div>' + 
-          '<a title="favorite this tweet" class="fav-action non-fav" id="status_star_{{ id }}">&nbsp;&nbsp;</a>' +
-        '</div>' + 
-      '</span>' +
-      '<span class="entry-content">&nbsp;{{{ text }}}</span>' +
-    '</span>' +
-    '<span data="{}" class="meta entry-meta">' +
-      '<a href="http://twitter.com/{{ user_screen_name }}/status/{{ id }}" rel="bookmark" class="entry-date">' +
-        '<span data="{time:\'{{ created_at }}\'}" class="published timestamp">{{ created_at }}</span>' +
-      '</a>'+
-    '</span>' +
-    '<ul class="actions-hover">' + 
-      '<li>' +
-        '<span class="reply">' +
-          '<span class="reply-icon icon"></span>' + 
-          '<a title="reply to {{ user_screen_name }}" href="/?status=@{{ user_screen_name }}&amp;in_reply_to_status_id={{ id }}&amp;in_reply_to={{ user_screen_name }}">Reply</a>' +
-        '</span>' +
-      '</li>' +
-      '<li>' + 
-        '<span class="retweet-link">' +
-          '<span class="retweet-icon icon"></span>' +
-          '<a href="#" title="Retweet">Retweet</a>' +
-        '</span>' +
-      '</li>' +
-    '</ul>' +
-    '<ul class="meta-data clearfix">' + 
-    '</ul>' +
-  '</span>' +
-'</li>',
-
+  attach:function() {
+    $('div.tweet').live('mouseover', function(){
+      var parentTweet = $(this);
+      parentTweet.find('span.reply-icon').each(function(idx, e) {
+        var areply = $(e);
+        if(!areply.hasClass('twittr_conv')) {
+          var conv_span=$('<span class="twittr_conv"></span>');
+          var conv_link=$('<a style="color:blue;font-size:1.2em;font-weight:bold;" href="#">&#8618;</a>');
+          conv_link.click(function(){parentTweet.click();twittrConv.fetch_conversation(parentTweet);return false});
+          conv_span.append(conv_link);
+          areply.parent().prepend(conv_span);
+          areply.addClass('twittr_conv');
+        } 
+      });
+    });
+    $('div#global-nav ul').append('<li id="twitconv-nav"><a href="/#!/messages">Conversations</a></li>');
+  },
+  
   fetch_conversation:function(je) {
-    var id= je.attr('href').split('/').pop();
-    var par_li = je.parents('li.status');
-    //alert(par_li.attr('id'));
-    var newli = $('<li class="hentry status twittr_conv" style="padding-left:10px;"><ol class="statuses"><li>Conversation:</li></ol></li>')
-    par_li.after(newli);
-    var conv_ol = newli.find('ol.statuses');
-    twittrConv.fetch_status(id, conv_ol)
+    var id= $(je).attr('data-tweet-id');
+    var panel = $('div.inner-pane'); 
+    if(panel && panel.hasClass('active')) {
+      var convPanel = panel.find('div#conv_' + id);
+      if(!convPanel || !convPanel.length) {
+        var feedback = $('div#global-nav ul li#twitconv-nav a');
+        feedback.css('color', 'red').text('Loading conversation .');
+        var newComponent = $('<div class="component twittr_conv" id="conv_' + id + '"></div>')
+        var newContainer = $('<div class="related-tweets"><h3>Loading conversation...</h3></div>');
+        newComponent.append(newContainer);
+        twittrConv.fetch_status(id, id, false, panel, newContainer);
+      }
+    }
   },
 
-  fetch_status:function(id, conv_ol){
-    //alert('fetch:' + id);
+  fetch_status:function(conv_id, id, append, rootParentContainer, parentContainer){
     $.ajax({
       url:'http://api.twitter.com/1/statuses/show/'+id+'.json', 
       success: function(data) {
         for(var a in data.user) {
           data['user_' + a] = data.user[a]
         }
-        data['text'] = twittrConv.parse_tweet(data.text);
-        conv_ol.append(Mustache.to_html(twittrConv.twit_template, data));
+        data.text = twittrConv.parse_tweet(data.text);
+        //alert('appending:' + id + ' to ' + parentContainer);
+        parentContainer.find('h3').after(Mustache.to_html(twittrConvTemplate.TEMPLATE, data));  
+              
         if(data.in_reply_to_status_id){
-          twittrConv.fetch_status(data.in_reply_to_status_id, conv_ol);
+          //alert('fetching:' + data.in_reply_to_status_id + ' parent of ' + data.id);
+          var feedback = $('div#global-nav ul li#twitconv-nav a');
+          feedback.text(feedback.text() + '.');          
+          twittrConv.fetch_status(conv_id, data.in_reply_to_status_id, true, rootParentContainer, parentContainer);
         }
+        else {
+          //alert('conversation done');
+          parentContainer.find('h3').text('Conversation');
+          var attachTo =  $(rootParentContainer).find('div.component div.tweet-pane');
+          if(attachTo && attachTo.length) {
+            attachTo.parent().after(parentContainer.parent());
+          }
+          var feedback = $('div#global-nav ul li#twitconv-nav a');
+          feedback.css('color', '#BABABA').text('Conversations');       
+        }
+      },
+      error:function(xhr, textStatus, errorThrown) {
+          //alert('conversation fetching error:' + textStatus);
+          var feedback = $('div#global-nav ul li#twitconv-nav a');
+          feedback.css('color', '#BABABA').text('Conversations');          
+          parentContainer.find('h3').after('<div class="stream-item"><div class="tweet-content simple-tweet-content"><div class="tweet-row"><div class="tweet-text">'+
+            'Error fetching conversation:' + textStatus + '</div></div></div></div>'); 
+          var isAttached = $(rootParentContainer).find('div#conv_' + conv_id);
+          if(!isAttached || !isAttached.length) { 
+            var attachTo =  $(rootParentContainer).find('div.component div.tweet-pane');
+            if(attachTo && attachTo.length) {
+              attachTo.parent().after(parentContainer.parent());
+            }
+          }
       },
       dataType:'jsonp',
     });
   },
 
-  
   parse_tweet:function(text) {
     text=text.replace(/http(s)?:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+/g, function(url) {
   		return url.link(url);
@@ -87,35 +93,42 @@ var twittrConv = {
 	  	return t.link("http://search.twitter.com/search?q="+tag);
     });
     return text; 
-  },
+  },  
+};
+var twittrConvTemplate = {
+  TEMPLATE: '<div class="stream-item">' +
+'<div class="more">»</div>' +
+'<div data-user-id="{{ user_id }}" data-screen-name="{{ user_screen_name }}" data-item-id="{{ id }}" data-tweet-id="{{ id }}" class="stream-item-content tweet stream-tweet simple-tweet ">' +
+' <div class="tweet-dogear "></div>' +
+' <div class="tweet-image simple-tweet-image">' +
+'   <img width="32" height="32" data-user-id="{{ user_id }}" class="user-profile-link" alt="{{ user_name }}" src="{{ user_profile_image_url }}">' +
+' </div>' +
+' <div class="tweet-content simple-tweet-content">' +
+'   <div class="tweet-row">' +
+'     <span class="tweet-user-name">' +
+'       <a title="{{ user_name }}" href="/#!/{{ user_screen_name }}" data-user-id="{{ user_id }}" class="tweet-screen-name user-profile-link">{{ user_screen_name }}</a>'+
+'       <span class="tweet-full-name">{{ user_screen_name }}</span>' +
+'     </span>' +
+'     <div class="tweet-corner">' +
+'       <div class="tweet-meta">' + 
+'         <span class="icons"><div class="extra-icons"><span class="inlinemedia-icons"></span></div></span>' +
+'       </div>' +
+'     </div>' +
+'   </div>' +
+'   <div class="tweet-row"><div class="tweet-text">{{{ text }}}</div></div>' +
+'   <div class="tweet-row"></div>' +
+'   <div class="tweet-row">' +
+'     <a title="{{ created_at }}" class="tweet-timestamp" href="/#!/{{ user_screen_name }}/status/{{ id }}"><span data-long-form="true" data-time="" class="_timestamp">{{ created_at }}</span></a>' +
+'     <span data-tweet-id="{{ id }}" class="tweet-actions">' + 
+'       <a class="favorite-action" href="#"><span><i></i><b>Favorite</b></span></a>' +
+'       <a class="retweet-action" href="#"><span><i></i><b>Retweet</b></span></a>' +
+'       <a data-screen-name="dabeaz" class="reply-action" href="#"><span><i></i><b>Reply</b></span></a>' +
+'     </span>' + 
+'   </div>' + 
+'   <div class="tweet-row"></div>' +
+' </div></div></div>'}
 
-  attach:function() {
-    //alert('attaching');
-    $('span.status-body span.meta').each(function(idx,elem){
-      var a_elem=$(elem);
-      a_elem.find("a:contains('in reply to')").each(function(idx, e) {
-        var areply = $(e);
-        if(!areply.hasClass('twittr_conv')) {
-          var conv_span=$('<span class="meta entry-meta"></span>');
-          var conv_link=$('<a style="color:blue" href="' + areply.attr('href') + '">Show thread with ' + areply.text().substring(11) + '</a>');
-          conv_link.click(function(){twittrConv.fetch_conversation(areply);return false});
-          conv_span.append(conv_link);
-          a_elem.after(conv_span);
-          areply.addClass('twittr_conv');
-        }
-      });
-    });
-  },
-
-  activate:function() {
-    twittrConv.attach();
-    var navmenu = $('ul#primary_nav');
-    if(!navmenu.hasClass('twittr_conv')) {
-      navmenu.addClass('twittr_conv');
-      navmenu.append('<li id="twitter_conv"><a href="javascript:twittrConv.attach();" accesskey="t" title="Activate conversations">Conversations</a></li>');
-      $('div#pagination').after('<div style="margin-right: auto; margin-left: auto; text-align: center;" class="twittr_conversation"><a href="javascript:twittrConv.attach()" title="Activate conversations">Conversations</a></div>');
-      $('div#side').append('<div class="twittr_conv"><hr/><a href="javascript:twittrConv.attach()" title="Activate conversations" style="margin-left:13px;">Conversations</a></div>');
-    }
-  },
-}
-twittrConv.activate();
+twittrConv.attach();
+/*
+javascript:(function(){if(typeof(twittrConv)!='undefined'){alert('twittrConv%20already%20loaded');twittrConv.attach()}else{d=document;s=d.createElement('script');s.type='text/javascript';s.src='http://friendfeedredux.appspot.com/js/twitter.conversation.js?'+(new%20Date()).getTime();d.body.appendChild(s)}})();
+*/
