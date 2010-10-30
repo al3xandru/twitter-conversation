@@ -19,8 +19,9 @@ var twittrConv = {
   
   fetch_conversation:function(je) {
     var id= $(je).attr('data-tweet-id');
-    var panel = $('div.inner-pane'); 
-    if(panel && panel.hasClass('active')) {
+    var detailsPanel = $('div.details-pane');
+    if(detailsPanel && detailsPanel.hasClass('opened')) {
+      var panel = $('div.inner-pane'); 
       var convPanel = panel.find('div#conv_' + id);
       if(!convPanel || !convPanel.length) {
         var feedback = $('div#global-nav ul li#twitconv-nav a');
@@ -58,7 +59,7 @@ var twittrConv = {
             attachTo.parent().after(parentContainer.parent());
           }
           var feedback = $('div#global-nav ul li#twitconv-nav a');
-          feedback.css('color', '#BABABA').text('Conversations');       
+          feedback.css('color', '#BABABA').text('Conversations');
         }
       },
       error:function(xhr, textStatus, errorThrown) {
@@ -76,17 +77,18 @@ var twittrConv = {
           }
       },
       dataType:'jsonp',
+      timeout: 2000,
     });
   },
 
   parse_tweet:function(text) {
     text=text.replace(/http(s)?:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&\?\/.=]+/g, function(url) {
-  		return url.link(url);
+  		return '<a href="' + url + '" target="_blank">' + url + '</a>';
     });
-    
+
     text = text.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
 		  var username = u.replace("@","")
-		  return u.link("http://twitter.com/"+username);
+		  return '@<a href="' + username + '" data-screen-name="' + username + '" class="twitter-atreply" target="_blank">' + username + '</a>';
 	  });
     text = text.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
   		var tag = t.replace("#","%23")
@@ -119,14 +121,16 @@ var twittrConvTemplate = {
 '   <div class="tweet-row"></div>' +
 '   <div class="tweet-row">' +
 '     <a title="{{ created_at }}" class="tweet-timestamp" href="/#!/{{ user_screen_name }}/status/{{ id }}"><span data-long-form="true" data-time="" class="_timestamp">{{ created_at }}</span></a>' +
-'     <span data-tweet-id="{{ id }}" class="tweet-actions">' + 
-'       <a class="favorite-action" href="#"><span><i></i><b>Favorite</b></span></a>' +
-'       <a class="retweet-action" href="#"><span><i></i><b>Retweet</b></span></a>' +
-'       <a data-screen-name="dabeaz" class="reply-action" href="#"><span><i></i><b>Reply</b></span></a>' +
-'     </span>' + 
 '   </div>' + 
 '   <div class="tweet-row"></div>' +
-' </div></div></div>'}
+' </div></div></div>',
+
+  TWEET_ACTIONS: '     <span data-tweet-id="{{ id }}" class="tweet-actions">' + 
+  '       <a class="favorite-action" href="#"><span><i></i><b>Favorite</b></span></a>' +
+  '       <a class="retweet-action" href="#"><span><i></i><b>Retweet</b></span></a>' +
+  '       <a data-screen-name="{{ user_screen_name }}" class="reply-action" href="#"><span><i></i><b>Reply</b></span></a>' +
+  '     </span>'
+}
 
 twittrConv.attach();
 /*
