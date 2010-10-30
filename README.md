@@ -1,17 +1,11 @@
 # Description
 
-twitter.conversation.js is a JS script that replaces the "in reply to" link with an action that displays the complete conversation thread. The script also adds a "Conversations" menu item on the right bar that triggers reloading.
+twitter.conversation.js is a JS script that add a small arrow link close to the conversation icon. Once the action is triggered the complete conversation will be pulled and displayed in the details right panel.
 
-The script works only as long as there is not page refresh. But you should trigger a reloaded after any of the following actions:
+After loading the script there will be a Conversations menu item at the top of the page. That label will also be used to provide some sort of visual feedback while retrieving a conversation.
 
-- posting a new Tweet
-- receiving new Tweets
-- checking more Tweets
-- switching between Home page, @replies, direct messages and favorites
+The script works only as long as there is no complete page refresh. With the #newtwitter UI, you'll not need to reload the script. It will allow you to switch between the timeline and @replies without having to reload. It will also work for new tweets received after loading twitter.conversation.js through its bookmarklet. 
 
-Twitter web page is pretty friendly in terms of not requiring reloading. You can learn how to use it without reloading [here](http://jots.mypopescu.com/post/824229397/twitter-shortcuts).
-
-The "Conversations" menu item can be triggered using the "t" access key (*note*: triggering access keys depends from browser to browser: Safari CTRL+ALT+<key>, Firefox: CTRL+<key>, )
 
 # Bookmarklet
 
