@@ -1,0 +1,135 @@
+>
+> Alex Popescu's Quix Command File
+> 
+> See myquix command for current version
+> Syntax: http://quixapp.com/syntax/
+>
+> Default commands: http://quixapp.com/quix.txt
+
+
+@Aliases
+@These are redefinitions of the default commands
+*           http://www.google.com/search?q=%s									Google Search
+@@amazon    a
+@@def       d
+@@email     e
+@@images    img
+@@site      gs
+@@wikipedia w
+@@tweet     tn
+@@twit      tn
+@@twitu     t
+@@twituser  t
+@@twits     s
+@@gcache    gc
+@@head      h
+
+
+@Mac Integration commands
+tt              twitter://post?message=%s%20%t%20%r         Tweet with Twitter for Mac
+@@mtwit         tt                                          Tweet with Twitter for Mac
+
+@Mobile bookmarks
+ppwd        javascript:window.location.href="onepassword://"+encodeURI(window.location.href)         1Password
+twita       javascript:window.location.href="tweetbot://al3xandru/post?text="+escape(document.title)+"%20"+encodeURI(window.location.href)      Tweet current page with Tweetbot
+twitb       javascript:window.location="tweetie:"+escape(document.title)+"%20"+encodeURI(window.location.href)        Tweet current page with Tweetie
+yummy       javascript:location.href="yummy://post?url="+encodeURIComponent(window.location.href)+"&title="+encodeURIComponent(document.title)        Add bookmark to Yummy
+
+
+@My commands
+jmp         javascript:var%20d=document,w=window,enc=encodeURIComponent,e=w.getSelection,k=d.getSelection,x=d.selection,s=(e?e():(k)?k():(x?x.createRange().text:0)),s2=((s.toString()=='')?s:('%22'+enc(s)+'%22')),f='http://j.mp/',l=d.location,p='?v=3&u='+enc(l.href)%20+'&s='+enc(d.title)+'%20'+s2,u=f+p;try{if(!/^(.*\.)?tumblrzzz[^.]*$/.test(l.host))throw(0);tstbklt();}catch(z){a=function(){if(!w.open(u))l.href=u;};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();}void(0)          Shorted with j.mp
+
+pin         javascript:var%20e=encodeURIComponent,q=window.location.href,p=document.title;if(document.getSelection){d=document.getSelection();}else{d='';};if(!window.open('https://pinboard.in/add?showtags=yes&url='+e(q)+'&description='+e(d)+'&title='+e(p),'Pinboard','toolbar=no,width=700,height=750')){window.location.href='https://pinboard.in/add?showtags=yes&url='+e(q)+'&description='+e(d)+'&title='+e(p)}void(0)        Bookmark on Pinboard  
+
+> Pinboard alternative https://pinboard.in/add?showtags=yes&url=%r&description=%s&title=%t     Pinboard
+
+ril         javascript:(function(){ISRIL_H='a123';ISRIL_SCRIPT=document.createElement('SCRIPT');ISRIL_SCRIPT.type='text/javascript';ISRIL_SCRIPT.src='http://readitlaterlist.com/b/r.js';document.getElementsByTagName('head')[0].appendChild(ISRIL_SCRIPT)})();      Bookmark on ReadItLater
+
+> ReadItLater alternative  https://readitlaterlist.com/save?url=%r&title=%t http://readitlaterlist.com/edit/
+
+insta       javascript:function%20iprl5(){var%20d=document,z=d.createElement('scr'+'ipt'),b=d.body;try{if(!b)throw(0);d.title='(Saving...)%20'+d.title;z.setAttribute('src','http://www.instapaper.com/j/ZG1C50lHfgb4?u='+encodeURIComponent(d.location.href)+'&t='+(new%20Date().getTime()));b.appendChild(z);}catch(e){alert('Please%20wait%20until%20the%20page%20has%20loaded.');}}iprl5();void(0)        Bookmark on Instapaper
+@@ins       insta
+
+> Instapaper alternative http://instapaper.com/hello2?url='+encodeURIComponent(entry.attr('href'))+'&title='+encodeURIComponent(entry.text())
+
+tw          javascript:var%20d=document,w=window,f='http://twimblr.appspot.com/bm',l=d.location,e=encodeURIComponent,p='?v=1&u='+e(l.href)+'&t='+e(d.title),u=f+p,a=function(){if(!w.open(u,'Twimblr','toolbar=1,resizable=1,status=1,width=450,height=430'))l.href=u;};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();void(0)             Bookmark in Twimblr
+@@totw      tw
+@@2tw       tw
+
+
+twimblr         http://twimblr.appspot.com/         Go to Twimblr Toolkit
+@@gotw          twimblr                             
+
+pinreadr        http://pinreadr.appspot.com/        Go to Pinreadr
+@@pinread       pinreadr
+@@pinr          pinreadr
+
+nosql           http://nosql.mypopescu.com/         Go to myNoSQL
+@@blog          nosql
+@@myblog        nosql
+jots            http://jots.mypopescu.com/          Go to jots.mypopescu.com
+
+workflowy       http://www.workflowy.com/           Workflowy
+
+gr              http://www.google.com/reader        Go to Google Reader
+localtime       http://timdd.com                    International Time Zones
+
+
+read                javascript:(function(){var%20d=document,u='http://friendfeedredux.appspot.com',_rs=d.createElement('SCRIPT'),_rc=d.createElement('LINK');_rs.type='text/javascript';_rs.src=u+'/js/myreadability.js?x='+(Math.random());_rc.rel='stylesheet';_rc.href=u+'/css/readability.css';_rc.type='text/css';_rc.media='screen';readConvertLinksToFootnotes=true;readSize='size-medium';readMargin='margin-medium';readStyle='style-a';readFont="%s"||"Metrophobic";if(navigator.userAgent.match(/iphone|ipad|ipod|android/i)){readSize='size-large';readMargin='margin-narrow'};h=d.getElementsByTagName('head')[0];h.appendChild(_rs);h.appendChild(_rc);})();                My JS readability
+readability.py      http://ahrefs.appspot.com/r?u=%r&t=%t                My Readability.py
+readability.d       http://ahrefs.appspot.com/r2?u=%r&t=%t               My Readability w/ Diffbot
+readability         javascript:((function(){window.baseUrl='https://www.readability.com';window.readabilityToken='';var%20s=document.createElement('script');s.setAttribute('type','text/javascript');s.setAttribute('charset','UTF-8');s.setAttribute('src',baseUrl+'/bookmarklet/read.js');document.documentElement.appendChild(s);})())                          Readability.com
+
+@@readit            read
+@@r                 read
+@@rr                readability.py
+@@r.py              readability.py
+@@rpy               readability.py
+@@r.d               readability.d
+@@rd                readability.d
+@@rrrr              readability.d
+@@rrr               readability
+
+spreed              javascript:var%20w=window,d=document,sel=w.getSelection?w.getSelection():d.getSelection?d.getSelection():d.selection.createRange().text;sel=encodeURIComponent(""+sel);sel=sel.replace(/'/g,"_*_").replace(/%20/g,"+");var%20newd=w.document,zrfrm=newd.createElement('FORM'),frminput=newd.createElement('INPUT');zrfrm.action='http://www.spreeder.com/app.php';zrfrm.method='POST';frminput.type='hidden';frminput.name='passage';frminput.value=sel;zrfrm.appendChild(frminput);newd.body.appendChild(zrfrm);zrfrm.submit();                                                                    Spreed! http://www.spreeder.com/
+
+
+markd       http://www.aaronsw.com/2002/html2text/?url=%r		Transform this page into Markdown
+@@mkd       markd
+@@markdown  markd
+
+myquix      javascript:alert('myQuix%20version:v.2011.09.15-04:06');void(0)              Display my Quix settings version
+
+
+ccopy       javascript:(function(){var%20w=window,d=document,pageSelectedTxt=w.getSelection?w.getSelection():(d.getSelection)?d.getSelection():(d.selection?d.selection.createRange().text:0),pageTitle=d.title.replace(/\n|\r/g,"%20"),pageUri=w.location.href,cpTxt=pageUri+"\n"+pageTitle+"\n"+pageSelectedTxt;prompt("Copy%20selection",cpTxt);})();              Smart copy to clipboard (JS only)
+@@cc        ccopy
+fcopy       javascript:(function(){var%20scr=document.createElement("SCR"+"IPT");scr.type="text/javascript";scr.src="http://friendfeedredux.appspot.com/cc/ZeroClipboard.js";scr.onload=function(){ZeroClipboard.setMoviePath("http://friendfeedredux.appspot.com/cc/ZeroClipboard.swf");var%20clip=new%20ZeroClipboard.Client(),pageSelectedTxt=window.getSelection?window.getSelection():(document.getSelection)?document.getSelection():(document.selection?document.selection.createRange().text:0),pageTitle=document.title,pageUri=window.location.href,cpTxt="",topd=document.createElement('DIV');topd.id="_zeroclipboard_btn";topd.style.cssText="position:fixed;top:0;left:0;z-index:10000;width:80px;height:60px;background-color:#FFF;color:#333;padding-top:20px;text-align:center;border:1px%20solid%20#f0f0f0;border-bottom:2px%20solid%20#ccc;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;";topd.innerHTML="Click<br/>to%20copy%20to<br/>clipboard";document.body.appendChild(topd);clip.setHandCursor(true);document.body.id=document.body.id||"_zeroclipboard_all";clip.glue(document.body.id,"_zeroclipboard_btn");cpTxt="title:"+pageTitle+"%20%20\n";cpTxt=cpTxt+"link:"+pageUri+"%20%20\n\n"+pageSelectedTxt;clip.setText(cpTxt);clip.addEventListener("onComplete",function(client,text){document.getElementById("_zeroclipboard_btn").innerHTML="Copied<br/>to<br/>clipboard";});};document.body.appendChild(scr);})();                                            Smart copy to clipboard (Flash-based)
+
+
+nvalt       javascript:(function(){var%20w=window,d=document,pageSelectedTxt=w.getSelection?w.getSelection():(d.getSelection)?d.getSelection():(d.selection?d.selection.createRange().text:0),pageTitle=d.title,pageUri=w.location.href,ismobile=false;if(navigator.userAgent.match(/ipad|iphone/i)){ismobile=true};if(pageSelectedTxt!=""){pageSelectedTxt=">%20"+pageSelectedTxt;pageSelectedTxt=pageSelectedTxt.replace(/(\r\n|\n+|\r)/gm,"\n");pageSelectedTxt=pageSelectedTxt.replace(/\n/g,"\n>%20\n>%20");var%20tmplt="",dt=new%20Date(),blog=prompt("Blog?%20(jots,nosql)","jots");tmplt="---\ntitle:"+pageTitle+"%20%20%20\ntags:%20%20%20\nlink:"+pageUri+"%20%20%20\nstate:published%20draft%20queue%20%20%20\npubdate:"+dt.getFullYear()+"-"+(1+dt.getMonth())+"-"+dt.getDate()+"%20%20%20\nblog:"+blog+"%20%20%20\nid:%20%20%20\n\n---\n\n["+pageTitle+"]("+pageUri+")\n\n";if(ismobile){prompt("Copy:",tmplt+pageSelectedTxt)}else{w.location.href="nvalt://make/?txt="+encodeURIComponent(tmplt+pageSelectedTxt)+"&title="+encodeURIComponent(pageTitle)}}else{if(ismobile){prompt("Copy:","["+pageTitle+"]("+pageUri+")")}else{var%20ft=prompt("Type?%20(t,i,p)","t");if(ft=="p"){w.location.href="nvalt://make/?url="+encodeURIComponent(pageUri)+"&title="+encodeURIComponent(pageTitle)}else%20if(ft=="i"){pageTitle=pageTitle+"%20"+encodeURIComponent(pageUri),pageUri="http://www.instapaper.com/m?u="+encodeURIComponent(pageUri);w.location.href="nvalt://make/?url="+encodeURIComponent(pageUri)+"&title="+encodeURIComponent(pageTitle)}else{w.location.href="nvalt://make/?txt="+encodeURIComponent("["+pageTitle+"]("+pageUri+")")+"&title="+encodeURIComponent(pageTitle)}}}})();            Create nvALT note from page or selection
+
+slides      javascript:(function(){if(!slideshare_object)%20return;var%20d=decodeURIComponent,l=d("%3C"),g=d("%3E"),o=l+"div%20class='embedded'%20style='width:425px'%20id='__ss_"+slideshare_object.presentationId+"'"+g+l+"iframe%20src='"+slideshare_object.slideshow.iframe_url+"?rel=0'%20width='425'%20height='355'%20frameborder='0'%20marginwidth='0'%20marginheight='0'%20scrolling='no'"+g+l+"/iframe"+g+l+"div%20style='padding-top:5px;padding-bottom:12px'"+g+l+"a%20href='"+window.location.href+"'%20rel='nofollow%20external'"+g+slideshare_object.slideshow.title+l+"/a"+g+"%20from%20"+l+"a%20href='http://www.slideshare.net/"+slideshare_object.slideshow.user_login+"'%20rel='nofollow%20external'"+g+slideshare_object.slideshow.user_name+l+"/a"+g+l+"/div"+g+l+"/div"+g;prompt("Code:",o);})();                     Embeddable Slideshare Slides
+
+thl         javascript:(function(){var%20enc=encodeURIComponent,w=window,frames=w.frames,d=document,tn=w.getSelection?w.getSelection():(d.getSelection)?d.getSelection():(d.selection?d.selection.createRange().text:0),pu=w.location.href,isGMail=w.location.host.match(/mail\.google\.com/),pt=d.title,tt=pt,gmsgFrm=d.getElementById("canvas_frame"),subjSpans,i,url;if(tn==""){for(i=0;i<frames.length&&tn=="";i++){if(frames[i].document!=undefined)tn=frames[i].document.getSelection().toString();}};if(isGMail){if(gmsgFrm){subjSpans=gmsgFrm.contentDocument.getElementsByClassName("hP");if(subjSpans)tt=subjSpans[0].innerText};if(!subjSpans){tt=d.title.substring(d.title.indexOf("-")+1,d.title.lastIndexOf("-")).replace(/^%20+/,"").replace(/%20+$/,"")};if(tn!=""){tn+="\n\n"};tn+="From%20email%20subject:("+tt+")\n"+pu;pu="https://mail.google.com/mail/u/0/?qs=true&search=query&q=subject:("+enc(tt)+")"};tt=prompt("Task%20description:",tt);if(tt==""){tt=d.title};url="thehitlist:///inbox/tasks?method=POST&title="+enc(tt)+"&url="+enc(pu)+"&notes="+enc(tn);try{if(!w.open(url))w.location.href=url}catch(_e){w.location.href=url}})();         The Hit List
+@@todo      thl
+
+omni        javascript:(function(){var%20enc=encodeURIComponent,w=window,frames=w.frames,d=document,tn=w.getSelection?w.getSelection():(d.getSelection)?d.getSelection():(d.selection?d.selection.createRange().text:0),pu=w.location.href,isGMail=w.location.host.match(/mail\.google\.com/),tt=pt=d.title,gmsgFrm=d.getElementById("canvas_frame"),subjSpans,i,url;if(tn==""){for(i=0;i<frames.length&&tn=="";i++){if(frames[i].document!=undefined)tn=frames[i].document.getSelection().toString();}}if(isGMail){if(gmsgFrm){subjSpans=gmsgFrm.contentDocument.getElementsByClassName("hP");if(subjSpans)tt=subjSpans[0].innerText;};if(!subjSpans){tt=d.title.substring(d.title.indexOf("-")+1,d.title.lastIndexOf("-")).replace(/^%20+/,"").replace(/%20+$/,"")};if(tn!="")tn+="\n\n";tn+="From%20email%20subject:("+tt+")\n"+pu;pu="https://mail.google.com/mail/u/0/?qs=true&search=query&q=subject:("+enc(tt)+")"};url='omnifocus:///add?note='+enc(tn+"\n"+pu)+'&name='+enc(tt);w.location.href=url})();           OmniFocus
+@@of        omni
+
+> slides      javascript:var%20d=document,w=window,f='http://friendfeedredux.appspot.com/deck',l=d.location,e=encodeURIComponent,p='?v=1&u='+e(l.href),u=f+p,a=function(){if(!w.open(u,'Slideshare','toolbar=1,resizable=1,status=1,width=450,height=430'))l.href=u;};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();void(0)                    Embeddable Slideshare
+
+>
+> Old stuff
+>
+
+> read            javascript:(function(){STYLES={n:'newspaper',o:'novel',i:'apertura',a:'athelas',e:'ebook'};S=prompt('Style:(Newspaper,nOvel,Inverted,Athelas,Ebook)/cd','i,c');S=S.split(',');cstyle=S.pop()||'d';style=S.pop()||'i';readStyle='style-'+STYLES[style];d=document;u='http://lab.arc90.com/experiments/readability';_readability_script=d.createElement('SCRIPT');_readability_script.type='text/javascript';_readability_script.src=u+'/js/readability.js?x='+(Math.random());_readability_script.onload=function(){for(i=0;i<10;i=i+1){for(j=0;j<100000;j=j+1){i+j}};if(document.getElementById('readability-content')){var%20D=document,R=document.getElementById('readTools'),H;R.parentNode.removeChild(R);R=D.getElementById('readFooter');R.parentNode.removeChild(R);H=d.getElementById('readInner').getElementsByTagName('h1')[0];R=d.getElementById('readability-content');R.innerHTML='<h1>'+H.innerHTML+'</h1><h6><a%20href=\''+window.location.href+'\'>'+window.location.href+'</a></h6>'+R.innerHTML;H.parentNode.removeChild(H);}};_readability_css=d.createElement('LINK');_readability_css.rel='stylesheet';_readability_css.href=u+'/css/readability.css';_readability_css.type='text/css';_readability_css.media='screen';_readability_print_css=d.createElement('LINK');_readability_print_css.rel='stylesheet';_readability_print_css.type='text/css';if(cstyle=='c'){_readability_print_css.media='all';_readability_print_css.href='http://ahrefs.appspot.com/css/readability.css'}else{_readability_print_css.media='print';_readability_print_css.href=u+'/css/readability-print.css'};h=d.getElementsByTagName('head')[0];readConvertLinksToFootnotes=true;readSize='size-small';readMargin='margin-wide';h.appendChild(_readability_script);h.appendChild(_readability_css);h.appendChild(_readability_print_css);})();                   Readability++
+
+> readability.v1     javascript:(function(){STYLES={n:'newspaper',o:'novel',i:'apertura',a:'athelas',e:'ebook'};S=prompt('Style:(Newspaper,nOvel,Inverted,Athelas,Ebook)/cd','i,c');S=S.split(',');cstyle=S.pop()||'d';style=S.pop()||'i';readStyle='style-'+STYLES[style];d=document;u='http://lab.arc90.com/experiments/readability';_readability_script=d.createElement('SCRIPT');_readability_script.type='text/javascript';_readability_script.src=u+'/js/readability.js?x='+(Math.random());_readability_css=d.createElement('LINK');_readability_css.rel='stylesheet';_readability_css.href=u+'/css/readability.css';_readability_css.type='text/css';_readability_css.media='screen';_readability_print_css=d.createElement('LINK');_readability_print_css.rel='stylesheet';_readability_print_css.type='text/css';if(cstyle=='c'){_readability_print_css.media='all';_readability_print_css.href='http://ahrefs.appspot.com/css/readability.css'}else{_readability_print_css.media='print';_readability_print_css.href=u+'/css/readability-print.css'};h=d.getElementsByTagName('head')[0];readConvertLinksToFootnotes=true;readSize='size-small';readMargin='margin-wide';h.appendChild(_readability_script);h.appendChild(_readability_css);h.appendChild(_readability_print_css);})();       Readability
+> @@oldread           readability.v1
+
+> ad        javascript:void(window.location.href='http://wapi.adjix.com/twitterTweet?url='+encodeURIComponent(location.href)+'&partnerID=d00564f0e9f347a2aef87073b0f8dc05&apiKey=3b8c71c6e55448bc86a17ff7a32e3021&ultraShort=y');         Adjix shortener with Twitter
+> ads          javascript:void(location.href='http://wapi.adjix.com/shrinkWebLink?url='+escape(location.href)+'&partnerID=d00564f0e9f347a2aef87073b0f8dc05&at=-1&apiKey=3b8c71c6e55448bc86a17ff7a32e3021&ultraShort=y');                  Adjix shortener
+
+> zapw                 javascript:(function(){var%20wnd=window.open('','ZapRead');STYLES={n:'newspaper',o:'novel',i:'apertura',a:'athelas',e:'ebook'};S=prompt('Style:(Newspaper,nOvel,Inverted,Athelas,Ebook)/cd','i,c');S=S.split(',');cstyle=S.pop()||'d';style=S.pop()||'i';readStyle='style-'+STYLES[style];d=document;u='http://lab.arc90.com/experiments/readability';_readability_script=d.createElement('SCRIPT');_readability_script.type='text/javascript';_readability_script.src=u+'/js/readability.js?x='+(Math.random());_readability_script.onload=function(){for(i=0;i<10;i=i+1)for(j=0;j<100000;j=j+1)i+j;var%20artBody=document.getElementById('readability-content');var%20e=artBody?artBody.textContent:'';var%20newd=wnd.document;var%20zrfrm=newd.createElement('FORM');zrfrm.action='http://zapreader.com/reader/';zrfrm.method='POST';var%20frminput=newd.createElement('INPUT');frminput.type='hidden';frminput.name='PastedText';frminput.value=encodeURIComponent(e).replace(/%20/g,'+');zrfrm.appendChild(frminput);newd.body.appendChild(zrfrm);zrfrm.submit();wnd.focus()};_readability_css=d.createElement('LINK');_readability_css.rel='stylesheet';_readability_css.href=u+'/css/readability.css';_readability_css.type='text/css';_readability_css.media='screen';_readability_print_css=d.createElement('LINK');_readability_print_css.rel='stylesheet';_readability_print_css.type='text/css';if(cstyle=='c'){_readability_print_css.media='all';_readability_print_css.href='http://ahrefs.appspot.com/css/readability.css'};h=d.getElementsByTagName('head')[0];readSize='size-small';readMargin='margin-wide';h.appendChild(_readability_script);h.appendChild(_readability_css);h.appendChild(_readability_print_css);})();           Zap Read Window 
+
+> zap                 javascript:(function(){STYLES={n:'newspaper',o:'novel',i:'apertura',a:'athelas',e:'ebook'};S=prompt('Style:(Newspaper,nOvel,Inverted,Athelas,Ebook)/cd','i,c');S=S.split(',');cstyle=S.pop()||'d';style=S.pop()||'i';readStyle='style-'+STYLES[style];d=document;u='http://lab.arc90.com/experiments/readability';_readability_script=d.createElement('SCRIPT');_readability_script.type='text/javascript';_readability_script.src=u+'/js/readability.js?x='+(Math.random());_readability_script.onload=function(){for(i=0;i<10;i=i+1)for(j=0;j<100000;j=j+1)i+j;var%20artBody=document.getElementById('readability-content');var%20e=artBody?artBody.textContent:'';var%20zrfrm=document.createElement('FORM');zrfrm.action='http://zapreader.com/reader/';zrfrm.method='POST';var%20frminput=document.createElement('INPUT');frminput.type='hidden';frminput.name='PastedText';frminput.value=encodeURIComponent(e).replace(/%20/g,'+');zrfrm.appendChild(frminput);document.body.appendChild(zrfrm);zrfrm.submit();};_readability_css=d.createElement('LINK');_readability_css.rel='stylesheet';_readability_css.href=u+'/css/readability.css';_readability_css.type='text/css';_readability_css.media='screen';_readability_print_css=d.createElement('LINK');_readability_print_css.rel='stylesheet';_readability_print_css.type='text/css';if(cstyle=='c'){_readability_print_css.media='all';_readability_print_css.href='http://ahrefs.appspot.com/css/readability.css'};h=d.getElementsByTagName('head')[0];readSize='size-small';readMargin='margin-wide';h.appendChild(_readability_script);h.appendChild(_readability_css);h.appendChild(_readability_print_css);})();                 Enhanced ZapRead http://www.zapreader.com
+> @@zapread           zap
